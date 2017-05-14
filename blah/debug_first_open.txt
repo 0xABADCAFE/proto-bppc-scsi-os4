@@ -1,0 +1,24 @@
+[Notice  ] [BlizzPPC_Init] Initialising driver
+[Notice  ] [BlizzPPC_Init] Initialisation complete
+[Notice  ] [genericObtain] blizzppc.device: Here
+[Notice  ] [BlizzPPC_TaskEntry] [blizzppc.device] Worker Task up and running [0x3E7FA540]
+[Notice  ] [BlizzPPC_GrabResources] [blizzppc.device] Allocated Command MsgPort [0x3EB039D0]
+	mp_Flags           0x82
+	mp_SigBit          31
+	mp_SigTask         [0x3E7FA540]
+	mp_MsgList.lh_Head [0x3EB039E8]
+[Notice  ] [BlizzPPC_GrabResources] [blizzppc.device] Allocated Timer MsgPort [0x3EB03B10]
+	mp_Flags           0x82
+	mp_SigBit          30
+	mp_SigTask         [0x3E7FA540]
+	mp_MsgList.lh_Head [0x3EB03B28]
+[Notice  ] [BlizzPPC_GrabResources] [blizzppc.device] Allocated TimeRequest [0x3EA87550]
+[Notice  ] [BlizzPPC_GrabResources] [blizzppc.device] Allocated Signal 0x20000000 for Interrupt
+[Notice  ] [BlizzPPC_TaskEntry] [blizzppc.device] Resources aquired
+[Notice  ] [BlizzPPC_FreeResources] [blizzppc.device] Freed Interrupt Signal
+[Notice  ] [BlizzPPC_FreeResources] [blizzppc.device] Freed TimeRequest
+[Notice  ] [BlizzPPC_FreeResources] [blizzppc.device] Freed Timer MsgPort
+[Notice  ] [BlizzPPC_FreeResources] [blizzppc.device] Freed Command MsgPort
+[Notice  ] [BlizzPPC_TaskEntry] [blizzppc.device] Exit
+[Notice  ] [BlizzPPC_Open] blizzppc.device: Here
+[Notice  ] [BlizzPPC_Close] Here

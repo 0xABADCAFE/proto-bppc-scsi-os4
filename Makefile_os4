@@ -1,0 +1,33 @@
+
+# Standardised DEBUGLEVEL levels (requires -DDEBUG)
+#
+# DBG_CRITICAL 0  report critical failures only
+# DBG_ERROR    1         + serious problems
+# DBG_WARN     2         + warnings
+# DBG_NOTICE   3         + notifications
+# DBG_INFO     4         + basic debug information
+# DBG_MISC     5         + miscellaneous extra information
+
+NAME    = blizzppc.device
+VERSION = 0
+TARGET  = $(NAME)
+CFLAGS  = -c -gstabs -O2 -mcrt=newlib -Wall -Wwrite-strings -Werror \
+	-fomit-frame-pointer -fstrength-reduce -fno-builtin \
+	-D__NOGLOBALIFACE__ -DDEBUG -DDEBUGLEVEL=5
+LDFLAGS = -nostartfiles -d -gstabs -mcrt=newlib
+LIBS    = -LSDK:newlib/lib
+OBJS    = obj/os4_device.o obj/os4_device_68k.o obj/blizzppc_device.o obj/debug.o
+
+all: $(TARGET)
+
+obj/os4_device.o: src/os4_device.c
+obj/os4_device_68k.o: src/os4_device_68k.c
+obj/blizzppc_device.o: src/blizzppc_device.c
+obj/debug.o: src/debug.c
+
+$(TARGET) :	$(OBJS)
+	$(CC) $(LINK) $(LDFLAGS) -o build/$(TARGET) $(OBJS)  -Wl,--cref,-M,-Map=$@.map
+
+
+obj/%.o: src/%.c
+	$(CC) $(CFLAGS) -o $@ src/$*.c

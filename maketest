@@ -1,0 +1,1 @@
+gcc -Wall -W test_device.c -o test_device

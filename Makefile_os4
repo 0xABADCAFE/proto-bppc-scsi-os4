@@ -23,6 +23,7 @@ all: $(TARGET)
 obj/os4_device.o: src/os4_device.c
 obj/os4_device_68k.o: src/os4_device_68k.c
 obj/blizzppc_device.o: src/blizzppc_device.c
+obj/blizzppc_task.o: src/blizzppc_task.c
 obj/debug.o: src/debug.c
 
 $(TARGET) :	$(OBJS)

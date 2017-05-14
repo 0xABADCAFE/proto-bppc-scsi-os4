@@ -1,1 +1,3 @@
 .kdev*
+obj/*.o
+build/*.device

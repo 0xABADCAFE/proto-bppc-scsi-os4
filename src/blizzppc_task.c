@@ -12,6 +12,6 @@
 
 extern struct ExecIFace * IExec;
 
-void BlizzPPC_TaskMain(BlizzPPC_Device *) {
+void BlizzPPC_TaskMain(BlizzPPC_Device * bppc_Device) {
 	pprintf(DBG_NOTICE, "Here\n");
 }

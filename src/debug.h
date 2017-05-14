@@ -1,3 +1,9 @@
+/**
+ * blizzppc.device
+ *
+ * Experimental OS4 SCSI driver, prototype. 
+ */
+
 #ifndef _OS4_BLIZZPPC_DEVICE_DEBUG_H_
 	#define _OS4_BLIZZPPC_DEVICE_DEBUG_H_
 

@@ -1,3 +1,9 @@
+/**
+ * blizzppc.device
+ *
+ * Experimental OS4 SCSI driver, prototype. 
+ */
+
 #include <proto/exec.h>
 #include "debug.h"
 

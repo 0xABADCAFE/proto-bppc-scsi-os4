@@ -20,7 +20,7 @@
  * Main device structure.
  */
 typedef struct {
-	struct Library       bpd_Library;
+	struct Library       bpd_Library;    
 	struct Task *        bpd_Task;          /* Worker task for the device */
 	struct MsgPort *     bpd_CommandPort;   /* Message port to which commands are sent */
 	struct MsgPort *     bpd_TimerPort;     /* Message port for use by internal timer */

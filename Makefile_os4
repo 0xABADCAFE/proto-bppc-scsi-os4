@@ -16,7 +16,7 @@ CFLAGS  = -c -gstabs -O2 -mcrt=newlib -Wall -Wwrite-strings -Werror \
 	-D__NOGLOBALIFACE__ -DDEBUG -DDEBUGLEVEL=5
 LDFLAGS = -nostartfiles -d -gstabs -mcrt=newlib
 LIBS    = -LSDK:newlib/lib
-OBJS    = obj/os4_device.o obj/os4_device_68k.o obj/blizzppc_device.o obj/debug.o
+OBJS    = obj/os4_device.o obj/os4_device_68k.o obj/blizzppc_device.o obj/blizzppc_task.o obj/debug.o
 
 all: $(TARGET)
 

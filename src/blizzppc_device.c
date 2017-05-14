@@ -12,6 +12,7 @@
 
 struct ExecIFace * IExec = 0;
 
+extern void BlizzPPC_TaskMain(BlizzPPC_Device *);
 static void BlizzPPC_TaskEntry(BlizzPPC_Device *);
 static int  BlizzPPC_GrabResources(BlizzPPC_Device *);
 static void BlizzPPC_FreeResources(BlizzPPC_Device *);
@@ -21,7 +22,7 @@ static void BlizzPPC_FreeResources(BlizzPPC_Device *);
 BlizzPPC_Device * BlizzPPC_Init(BlizzPPC_Device * bppc_Device, void * seglist UNUSED, struct ExecIFace * iExec) {
 	struct ExecBase * SysBase          = NULL;
 
-	/* set up the global exec interface */
+	/* set up the global exec interface - TODO should this just be an injected dependency in the Device structure? */
 	IExec = iExec;
 	IExec->Obtain();
 
@@ -37,32 +38,35 @@ BlizzPPC_Device * BlizzPPC_Init(BlizzPPC_Device * bppc_Device, void * seglist UN
 	bppc_Device->bpd_IntHandler   = NULL;
 	bppc_Device->bpd_IntSignalBit = -1;
 
-	if (SysBase->LibNode.lib_Version < 52) {
-		pprintf(DBG_ERROR, "Kernel V52 required\n");
-		goto bail;
-	}
+	/* The things we do to avoid goto */
+	do {
+	
+		if (SysBase->LibNode.lib_Version < 52) {
+			pprintf(DBG_ERROR, "Kernel V52 required\n");
+			break;
+		}
 
-	/* Populate any missing fields */
-	bppc_Device->bpd_Library.lib_Revision = REVISION;
+		/* Populate any missing fields */
+		bppc_Device->bpd_Library.lib_Revision = REVISION;
 
-	/* Create the driver task, which will attempt to do the rest of the initialisation */
-	if (!(bppc_Device->bpd_Task = IExec->CreateTaskTags(
-		BPPC_DEVICE_NAME,
-		BPPC_DEVICE_TASKPRI,
-		BlizzPPC_TaskEntry,
-		BPPC_DEVICE_STACK,
-		AT_Param1, bppc_Device,
-		TAG_DONE
-	))) {
-		pprintf(DBG_ERROR, "Failed to create Task\n");
-		goto bail;
-	}
+		/* Create the driver task, which will attempt to do the rest of the initialisation */
+		if (!(bppc_Device->bpd_Task = IExec->CreateTaskTags(
+			BPPC_DEVICE_NAME,
+			BPPC_DEVICE_TASKPRI,
+			BlizzPPC_TaskEntry,
+			BPPC_DEVICE_STACK,
+			AT_Param1, bppc_Device,
+			TAG_DONE
+		))) {
+			pprintf(DBG_ERROR, "Failed to create Task\n");
+			break;
+		}
 
-	pprintf(DBG_NOTICE, "Initialisation complete\n");
+		pprintf(DBG_NOTICE, "Initialisation complete\n");
 
-	return bppc_Device;
+		return bppc_Device;
 
-bail:
+	} while (0);
 
 	return NULL;
 }
@@ -245,14 +249,10 @@ static void BlizzPPC_FreeResources(BlizzPPC_Device * bppc_Device) {
 void BlizzPPC_TaskEntry(BlizzPPC_Device * bppc_Device) {
 
 	struct Task * thisTask = IExec->FindTask(NULL);
-
 	pprintf(DBG_NOTICE, "[" BPPC_DEVICE_NAME "] Worker Task up and running [%p]\n", thisTask);
-
 	if (BlizzPPC_GrabResources(bppc_Device)) {
 		pprintf(DBG_NOTICE, "[" BPPC_DEVICE_NAME "] Resources aquired\n");
-
-		/* TODO - command processing loop */
-		
+		BlizzPPC_TaskMain(bppc_Device);
 		BlizzPPC_FreeResources(bppc_Device);
 	}
 

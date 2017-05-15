@@ -43,7 +43,15 @@ enum {
 	BPPC_NCR710_CLOCK   = 50
 };
 
+/**
+ * Useful macros.
+ */
 #define BPPC_DEVICE_NAME "blizzppc.device"
 #define NOP asm("eieio; isync")
+
+/**
+ * Shared globals.
+ */
+extern struct ExecIFace * IExec;
 
 #endif

@@ -203,7 +203,7 @@ static int BlizzPPC_GrabResources(BlizzPPC_Device * bppc_Device) {
 		pprintf(
 			DBG_NOTICE,
 			"[" BPPC_DEVICE_NAME "] Allocated Signal 0x%08X for Interrupt\n",
-			(unsigned) (1L << bppc_Device->bpd_IntSignalBit)
+			(unsigned) (1UL << bppc_Device->bpd_IntSignalBit)
 		);
 
 		return 1;

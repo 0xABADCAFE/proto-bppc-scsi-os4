@@ -108,4 +108,101 @@ typedef struct {
 #undef _LONG_RW
 #undef _LONG_RO
 
+
+
+enum {
+	/**
+	 * NCR710_SCNTL0 Register Bits
+	 */
+	NCR710_SCNTL0_TRG   = 1<<0, /* Target Mode */
+	NCR710_SCNTL0_AAP   = 1<<1, /* Assert ATN/ on Parity Error */
+	NCR710_SCNTL0_EPG   = 1<<2, /* Enable Parity Generation Through */
+	NCR710_SCNTL0_EPC   = 1<<3, /* Enable Parity Checking */
+	NCR710_SCNTL0_WATN  = 1<<4, /* Select with ATN/ on a Start Sequence */
+	NCR710_SCNTL0_START = 1<<5, /* Start Sequence */
+	NCR710_SCNTL0_ARB0  = 1<<6, /* Arbitration Mode 0 */
+	NCR710_SCNTL0_ARB1  = 1<<7, /* Arbitration Mode 1 */
+
+	/**
+	 * NCR710_SCNTL1 Register Bits
+	 */
+	NCR710_SCNTL1_RCV   = 1<<0, /* Start SCSI Receive */
+	NCR710_SCNTL1_SND   = 1<<1, /* Start SCSI Send */
+	NCR710_SCNTL1_AESP  = 1<<2, /* Assert Even SCSI Parity (force bad) */
+	NCR710_SCNTL1_RST   = 1<<3, /* Assert SCSI RST/ Signal */
+	NCR710_SCNTL1_CON   = 1<<4, /* Connected */
+	NCR710_SCNTL1_ESR   = 1<<5, /* Enable Selection and Reselection */
+	NCR710_SCNTL0_ADB   = 1<<6, /* Asser SCSI Data Bus */
+	NCR710_SCNTL0_EXC   = 1<<7, /* Extra Clock Cycle of Data Setup */
+
+	/**
+	 * NCR710_SIEN Register Bits
+	 */
+	NCR710_SIEN_PAR     = 1<<0, /* Parity Error */
+	NCR710_SIEN_RST     = 1<<1, /* SCSI RST/ Received */
+	NCR710_SIEN_UDC     = 1<<2, /* Unexpected Disconnect */
+	NCR710_SIEN_SGE     = 1<<3, /* SCSI Gross Error */
+	NCR710_SIEN_SEL     = 1<<4, /* Selected or Reselected */
+	NCR710_SIEN_STO     = 1<<5, /* SCSI Bus Timeout */
+	NCR710_SIEN_FCMP    = 1<<6, /* Function Complete */
+	NCR710_SIEN_MA      = 1<<7, /* Initiator: Phase Mismatch or Target: ATN/ Active */
+
+	/**
+	 * NCR710_SXFER Register Bits
+	 */
+	NCR710_SXFER_MO0    = 1<<0, /* Max SCSI Synchronous Offset 0 */
+	NCR710_SXFER_MO1    = 1<<1, /* Max SCSI Synchronous Offset 1 */
+	NCR710_SXFER_MO2    = 1<<2, /* Max SCSI Synchronous Offset 2 */
+	NCR710_SXFER_MO3    = 1<<3, /* Max SCSI Synchronous Offset 3 */
+	NCR710_SXFER_TP0    = 1<<4, /* SCSI Synchronous Transfer Period 0 */
+	NCR710_SXFER_TP1    = 1<<5, /* SCSI Synchronous Transfer Period 1 */
+	NCR710_SXFER_TP2    = 1<<6, /* SCSI Synchronous Transfer Period 2 */
+	NCR710_SXFER_DHP    = 1<<7, /* Disable Halt on Parity Error or ATN/ */
+
+	/**
+	 * NCR710_SOCL Register Bits
+	 */
+	NCR710_SOCL_IO      = 1<<0, /* Assert SCSI I/O Signal */
+	NCR710_SOCL_CD      = 1<<1, /* Assert SCSI C/D Signal */
+	NCR710_SOCL_MSG     = 1<<2, /* Assert SCSI MSG/ Signal */
+	NCR710_SOCL_ATN     = 1<<3, /* Assert SCSI ATN/ Signal */
+	NCR710_SOCL_SEL     = 1<<4, /* Assert SCSI SEL/ Signal */
+	NCR710_SOCL_BSY     = 1<<5, /* Assert SCSI BSY/ Signal */
+	NCR710_SOCL_ACK     = 1<<6, /* Assert SCSI ACK/ Signal */
+	NCR710_SOCL_REQ     = 1<<7, /* Assert SCSI REQ/ Signal */
+
+	/**
+	 * NCR710_SBCL Register Bits
+	 */
+	NCR710_SBCL_IO      = 1<<0, /* I/O Status */
+	NCR710_SBCL_CD      = 1<<1, /* C/D Status */
+	NCR710_SBCL_MSG     = 1<<2, /* MSG/ Status */
+	NCR710_SBCL_ATN     = 1<<3, /* ATN/ Status */
+	NCR710_SBCL_SEL     = 1<<4, /* SEL/ Status */
+	NCR710_SBCL_BSY     = 1<<5, /* BSY/ Status */
+	NCR710_SBCL_ACK     = 1<<6, /* ACK/ Status */
+	NCR710_SBCL_REQ     = 1<<7, /* REQ/ Status */
+
+	/**
+	 * NCR710_DSTAT Register Bits
+	 */
+	NCR710_DSTAT_IID    = 1<<0, /* Illegal Instruction Detected */
+	NCR710_DSTAT_WTD    = 1<<1, /* Watchdog Timeout Detected */
+	NCR710_DSTAT_SIR    = 1<<2, /* SCRIPTS Interrupt Instruction Received */
+	NCR710_DSTAT_SSI    = 1<<3, /* SCRIPTS Step Interrupt */
+	NCR710_DSTAT_ABRT   = 1<<4, /* Aborted */
+	NCR710_DSTAT_BF     = 1<<5, /* Bus Fault */
+	NCR710_DSTAT_R      = 1<<6, /* RESERVED */
+	NCR710_DSTAT_DFE    = 1<<7, /* DMA FIFO Empty */
+
+} NCR710_RegisterBits;
+
+/**
+ * NCR710_SCNTL1 Register Bits
+ */
+typedef enum {
+
+
+} NCR710_SCNTL0_BITS;
+
 #endif

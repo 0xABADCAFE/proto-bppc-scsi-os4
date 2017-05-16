@@ -20,7 +20,7 @@ CFLAGS  = -c -gstabs -O2 -mcrt=newlib -Wall -Wwrite-strings -Werror \
 	-D__NOGLOBALIFACE__ -DDEBUG -DDEBUGLEVEL=5
 LDFLAGS = -nostartfiles -d -gstabs -mcrt=newlib
 LIBS    = -L/SDK/newlib/lib
-OBJS    = obj/os4_device.o obj/os4_device_68k.o obj/blizzppc_device.o obj/blizzppc_task.o obj/debug.o
+OBJS    = obj/os4_device.o obj/os4_device_68k.o obj/blizzppc_device.o obj/blizzppc_task.o obj/ncr710.o obj/debug.o 
 
 all: $(TARGET)
 
@@ -28,6 +28,7 @@ obj/os4_device.o: src/os4_device.c
 obj/os4_device_68k.o: src/os4_device_68k.c
 obj/blizzppc_device.o: src/blizzppc_device.c
 obj/blizzppc_task.o: src/blizzppc_task.c
+obj/ncr710.o: src/ncr710.c
 obj/debug.o: src/debug.c
 
 $(TARGET) :	$(OBJS)

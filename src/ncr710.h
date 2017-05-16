@@ -20,7 +20,7 @@
 #define _BYTE_RW volatile uint8
 #define _LONG_RW volatile uint32
 #define _BYTE_RO const volatile uint8
-#defome _LONG_RO const volatile uint32
+#define _LONG_RO const volatile uint32
 
 typedef struct {
 	_BYTE_RW NCR710_SCNTL0; /* 0x00 : SCSI Control Zero R/W */
@@ -86,7 +86,7 @@ typedef struct {
 
 #undef _BYTE_RW
 #undef _BYTE_RO
-#iundef _LONG_RW
+#undef _LONG_RW
 #undef _LONG_RO
 
 #endif

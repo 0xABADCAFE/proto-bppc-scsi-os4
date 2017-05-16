@@ -7,11 +7,7 @@
 #ifndef _OS4_BLIZZPPC_NCR710_H_
 #define _OS4_BLIZZPPC_NCR710_H_
 
-#include <proto/exec.h>
-#include <devices/scsidisk.h>
 #include <sys/types.h>
-
-#include "debug.h"
 
 #define _BYTE_RW volatile uint8
 #define _LONG_RW volatile uint32
@@ -21,7 +17,8 @@
 /**
  * NCR710 Register Map
  *
- * Registers are generally either 32 or 8 bit.
+ * Registers are generally either 32 or 8 bit. This structure to be mapped onto the
+ * hardware address of the SCSI controller.
  */
 typedef struct {
 
@@ -108,7 +105,9 @@ typedef struct {
 #undef _LONG_RW
 #undef _LONG_RO
 
-
+/**
+ * Reguster field definitions.
+ */
 
 enum {
 	/**
@@ -195,6 +194,89 @@ enum {
 	NCR710_DSTAT_R      = 1<<6, /* RESERVED */
 	NCR710_DSTAT_DFE    = 1<<7, /* DMA FIFO Empty */
 
+	/**
+	 * NCR710_SSTAT0 Register Bits
+	 */
+	NCR710_SSTAT0_PAR    = 1<<0, /* Parity Error */
+	NCR710_SSTAT0_RST    = 1<<1, /* SCSI RST/ Received */
+	NCR710_SSTAT0_UDC    = 1<<2, /* Unexpected Disconnect */
+	NCR710_SSTAT0_SGE    = 1<<3, /* SCSI Gross Error */
+	NCR710_SSTAT0_SEL    = 1<<4, /* Selected or Reselected */
+	NCR710_SSTAT0_STO    = 1<<5, /* SCSI Bus Timeout */
+	NCR710_SSTAT0_FCMP   = 1<<6, /* Function Complete */
+	NCR710_SSTAT0_MA     = 1<<7, /* Initiator: Phase Mismatch or Target: ATN/ Active */
+
+	/**
+	 * NCR710_SSTAT1 Register Bits
+	 */
+	NCR710_SSTAT1_SDP    = 1<<0, /* SCSI SDP Parity Signal */
+	NCR710_SSTAT1_RST    = 1<<1, /* SCSI RST/ Signal */
+	NCR710_SSTAT1_WOA    = 1<<2, /* Won Arbitration */
+	NCR710_SSTAT1_LOA    = 1<<3, /* Lost Arbitration */
+	NCR710_SSTAT1_AIP    = 1<<4, /* Arbitration in Progress */
+	NCR710_SSTAT1_OLF    = 1<<5, /* SODL Register Full */
+	NCR710_SSTAT1_ORF    = 1<<6, /* SODR Register Full */
+	NCR710_SSTAT1_ILF    = 1<<7, /* SIDL Register Full */
+
+	/**
+	 * NCR710_SSTAT2 Register Bits
+	 */
+	NCR710_SSTAT2_IO     = 1<<0, /* SCSI I/O Signal */
+	NCR710_SSTAT2_CD     = 1<<1, /* SCSI C/D Signal */
+	NCR710_SSTAT2_MSG    = 1<<2, /* SCSI MSG/ Signal */
+	NCR710_SSTAT2_SDP    = 1<<3, /* Latched SCSI Parity */
+	NCR710_SSTAT2_FF0    = 1<<4, /* FIFO Flags 0 */
+	NCR710_SSTAT2_FF1    = 1<<5, /* FIFO Flags 1 */
+	NCR710_SSTAT2_FF2    = 1<<6, /* FIFO Flags 2 */
+	NCR710_SSTAT2_FF3    = 1<<7, /* FIFO Flags 3 */
+
+	/**
+	 * NCR710_CTEST0 Register Bits
+	 */
+
+	/**
+	 * NCR710_CTEST1 Register Bits
+	 */
+
+	/**
+	 * NCR710_CTEST2 Register Bits
+	 */
+
+	/**
+	 * NCR710_CTEST4 Register Bits
+	 */
+
+	/**
+	 * NCR710_CTEST5 Register Bits
+	 */
+
+	/**
+	 * NCR710_CTEST7 Register Bits
+	 */
+
+	/**
+	 * NCR710_DFIFO Register Bits
+	 */
+
+	/**
+	 * NCR710_ISTAT Register Bits
+	 */
+
+	/**
+	 * NCR710_CTEST8 Register Bits
+	 */
+
+	/**
+	 * NCR710_DMODE Register Bits
+	 */
+
+	/**
+	 * NCR710_DIEN Register Bits
+	 */
+
+	/**
+	 * NCR710_DCNTL Register Bits
+	 */
 } NCR710_RegisterBits;
 
 /**

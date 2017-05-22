@@ -119,8 +119,8 @@ enum {
 	NCR710_SCNTL0_EPC   = 1<<3, /* Enable Parity Checking */
 	NCR710_SCNTL0_WATN  = 1<<4, /* Select with ATN/ on a Start Sequence */
 	NCR710_SCNTL0_START = 1<<5, /* Start Sequence */
-	NCR710_SCNTL0_ARB0  = 1<<6, /* Arbitration Mode 0 */
-	NCR710_SCNTL0_ARB1  = 1<<7, /* Arbitration Mode 1 */
+	NCR710_SCNTL0_ARB0  = 1<<6, /* Arbitration Mode[0] */
+	NCR710_SCNTL0_ARB1  = 1<<7, /* Arbitration Mode[1] */
 
 	/**
 	 * NCR710_SCNTL1 Register Bits
@@ -149,13 +149,13 @@ enum {
 	/**
 	 * NCR710_SXFER Register Bits
 	 */
-	NCR710_SXFER_MO0    = 1<<0, /* Max SCSI Synchronous Offset 0 */
-	NCR710_SXFER_MO1    = 1<<1, /* Max SCSI Synchronous Offset 1 */
-	NCR710_SXFER_MO2    = 1<<2, /* Max SCSI Synchronous Offset 2 */
-	NCR710_SXFER_MO3    = 1<<3, /* Max SCSI Synchronous Offset 3 */
-	NCR710_SXFER_TP0    = 1<<4, /* SCSI Synchronous Transfer Period 0 */
-	NCR710_SXFER_TP1    = 1<<5, /* SCSI Synchronous Transfer Period 1 */
-	NCR710_SXFER_TP2    = 1<<6, /* SCSI Synchronous Transfer Period 2 */
+	NCR710_SXFER_MO0    = 1<<0, /* Max SCSI Synchronous Offset[0] */
+	NCR710_SXFER_MO1    = 1<<1, /* Max SCSI Synchronous Offset[1] */
+	NCR710_SXFER_MO2    = 1<<2, /* Max SCSI Synchronous Offset[2] */
+	NCR710_SXFER_MO3    = 1<<3, /* Max SCSI Synchronous Offset[3] */
+	NCR710_SXFER_TP0    = 1<<4, /* SCSI Synchronous Transfer Period[0] */
+	NCR710_SXFER_TP1    = 1<<5, /* SCSI Synchronous Transfer Period[1] */
+	NCR710_SXFER_TP2    = 1<<6, /* SCSI Synchronous Transfer Period[2] */
 	NCR710_SXFER_DHP    = 1<<7, /* Disable Halt on Parity Error or ATN/ */
 
 	/**
@@ -225,50 +225,130 @@ enum {
 	NCR710_SSTAT2_CD     = 1<<1, /* SCSI C/D Signal */
 	NCR710_SSTAT2_MSG    = 1<<2, /* SCSI MSG/ Signal */
 	NCR710_SSTAT2_SDP    = 1<<3, /* Latched SCSI Parity */
-	NCR710_SSTAT2_FF0    = 1<<4, /* FIFO Flags 0 */
-	NCR710_SSTAT2_FF1    = 1<<5, /* FIFO Flags 1 */
-	NCR710_SSTAT2_FF2    = 1<<6, /* FIFO Flags 2 */
-	NCR710_SSTAT2_FF3    = 1<<7, /* FIFO Flags 3 */
+	NCR710_SSTAT2_FF0    = 1<<4, /* FIFO Flags[0] */
+	NCR710_SSTAT2_FF1    = 1<<5, /* FIFO Flags[1] */
+	NCR710_SSTAT2_FF2    = 1<<6, /* FIFO Flags[2] */
+	NCR710_SSTAT2_FF3    = 1<<7, /* FIFO Flags[3] */
 
 	/**
 	 * NCR710_CTEST0 Register Bits
 	 */
+	NCR710_CTEST0_DDIR   = 1<<0, /* Data Transfer Direction */
+	NCR710_CTEST0_R0     = 1<<1, /* Reserved */
+	NCR710_CTEST0_ERF    = 1<<2, /* Extend REQ/ACK Filtering */
+	NCR710_CTEST0_HSC    = 1<<3, /* Halt SCSI Clock */
+	NCR710_CTEST0_EAN    = 1<<4, /* Enable Active Negotiation */
+	NCR710_CTEST0_GRP    = 1<<5, /* Generate Receive Parity for Pass Through */
+	NCR710_CTEST0_BTD    = 1<<6, /* Byte to Byte Timer Disable */
+	NCR710_CTEST0_R1     = 1<<7, /* Reserved */
 
 	/**
 	 * NCR710_CTEST1 Register Bits
 	 */
+	NCR710_CTEST1_FFL0    = 1<<0, /* Full Byte in DMA FIFO[0] */
+	NCR710_CTEST1_FFL1    = 1<<1, /* Full Byte in DMA FIFO[1] */
+	NCR710_CTEST1_FFL2    = 1<<2, /* Full Byte in DMA FIFO[2] */
+	NCR710_CTEST1_FFL3    = 1<<3, /* Full Byte in DMA FIFO[3] */
+	NCR710_CTEST1_FMT0    = 1<<4, /* Byte Empty in DMA FIFO[0] */
+	NCR710_CTEST1_FMT1    = 1<<5, /* Byte Empty in DMA FIFO[1] */
+	NCR710_CTEST1_FMT2    = 1<<6, /* Byte Empty in DMA FIFO[2] */
+	NCR710_CTEST1_FMT3    = 1<<7, /* Byte Empty in DMA FIFO[3] */
 
 	/**
 	 * NCR710_CTEST2 Register Bits
 	 */
+	NCR710_CTEST2_DACK    = 1<<0, /* Data Acknowledge Status */
+	NCR710_CTEST2_DREQ    = 1<<1, /* Data Request Status */
+	NCR710_CTEST2_TEOP    = 1<<2, /* SCSI True End of Process */
+	NCR710_CTEST2_DFP     = 1<<3, /* DMA FIFO Parity */
+	NCR710_CTEST2_SFP     = 1<<4, /* SCSI FIFO Parity */
+	NCR710_CTEST2_SOFF    = 1<<5, /* SCSI Offset Compare */
+	NCR710_CTEST2_SIGP    = 1<<6, /* Signal Process */
+	NCR710_CTEST2_R0      = 1<<7, /* Reserved */
 
 	/**
 	 * NCR710_CTEST4 Register Bits
 	 */
+	NCR710_CTEST4_FBL0    = 1<<0, /* FIFO Byte Control[0] */
+	NCR710_CTEST4_FBL1    = 1<<1, /* FIFO Byte Control[1] */
+	NCR710_CTEST4_FBL2    = 1<<2, /* FIFO Byte Control[2] */
+	NCR710_CTEST4_SFWR    = 1<<3, /* SCSI FIFO Write Enable */
+	NCR710_CTEST4_SLBE    = 1<<4, /* SCSI Loopback Enable */
+	NCR710_CTEST4_SZM     = 1<<5, /* SCSI High Impedance Mode */
+	NCR710_CTEST4_ZMOD    = 1<<6, /* High Impedance Mode */
+	NCR710_CTEST4_MUX     = 1<<7, /* Host Bus Multiplex Mode */
 
 	/**
 	 * NCR710_CTEST5 Register Bits
 	 */
+	NCR710_CTEST5_DACK    = 1<<0, /* Data Acknowledge */
+	NCR710_CTEST5_DREQ    = 1<<1, /* Data Request */
+	NCR710_CTEST5_EOP     = 1<<2, /* End of Process */
+	NCR710_CTEST5_DDIR    = 1<<3, /* DMA Direction */
+	NCR710_CTEST5_MASR    = 1<<4, /* Master Control for Set or Reset Pulses */
+	NCR710_CTEST5_ROFF    = 1<<5, /* Reset SCSI Offset */
+	NCR710_CTEST5_BBCK    = 1<<6, /* Clock Byte Counter */
+	NCR710_CTEST5_ADCK    = 1<<7, /* Clock Address Incremetor */
 
 	/**
 	 * NCR710_CTEST7 Register Bits
 	 */
+	NCR710_CTEST7_DIFF    = 1<<0, /* Differential Mode */
+	NCR710_CTEST7_TT1     = 1<<1, /* Transfer Type Bit */
+	NCR710_CTEST7_EVP     = 1<<2, /* Even Parity */
+	NCR710_CTEST7_DFP     = 1<<3, /* DMA FIFO Parity */
+	NCR710_CTEST7_NOTIME  = 1<<4, /* Selection Timeout Disable */
+	NCR710_CTEST7_SC0     = 1<<5, /* Snoop Control[0] */
+	NCR710_CTEST7_SC1     = 1<<6, /* Snoop Control[1] */
+	NCR710_CTEST7_CDIS    = 1<<7, /* Cache Burst Disable */
 
 	/**
 	 * NCR710_DFIFO Register Bits
 	 */
+	NCR710_DFIFO_BO0      = 1<<0, /* Byte Offset Counter[0] */
+	NCR710_DFIFO_BO1      = 1<<1, /* Byte Offset Counter[1] */
+	NCR710_DFIFO_BO2      = 1<<2, /* Byte Offset Counter[2] */
+	NCR710_DFIFO_BO3      = 1<<3, /* Byte Offset Counter[3] */
+	NCR710_DFIFO_BO4      = 1<<4, /* Byte Offset Counter[4] */
+	NCR710_DFIFO_BO5      = 1<<5, /* Byte Offset Counter[5] */
+	NCR710_DFIFO_BO6      = 1<<6, /* Byte Offset Counter[6] */
+	NCR710_DFIFO_R        = 1<<7, /* Reserved */
 
 	/**
 	 * NCR710_ISTAT Register Bits
 	 */
+	NCR710_ISTAT_DIP      = 1<<0, /* DMA Interrupt Pending */
+	NCR710_ISTAT_SIP      = 1<<1, /* SCSI Interrupt Pending */
+	NCR710_ISTAT_R0       = 1<<2, /* Reserved */
+	NCR710_ISTAT_CON      = 1<<3, /* Connected */
+	NCR710_ISTAT_R1       = 1<<4, /* Reserved */
+	NCR710_ISTAT_SIGP     = 1<<5, /* Signal Process */
+	NCR710_ISTAT_RST      = 1<<6, /* Software Reset */
+	NCR710_ISTAT_ABRT     = 1<<7, /* Abort Operation */
 
 	/**
 	 * NCR710_CTEST8 Register Bits
 	 */
+	NCR710_CTEST8_SM      = 1<<0, /* Snoop Pins Mode */
+	NCR710_CTEST8_FM      = 1<<1, /* Fetch Pin Mode */
+	NCR710_CTEST8_CLF     = 1<<2, /* Clear DMA and SCSI FIFO */
+	NCR710_CTEST8_FLF     = 1<<3, /* Flush DMA FIFO */
+	NCR710_CTEST8_V0      = 1<<4, /* Chip Revision Level[0] */
+	NCR710_CTEST8_V1      = 1<<5, /* Chip Revision Level[1] */
+	NCR710_CTEST8_V2      = 1<<6, /* Chip Revision Level[2] */
+	NCR710_CTEST8_V3      = 1<<7, /* Chip Revision Level[3] */
 
 	/**
 	 * NCR710_DMODE Register Bits
 	 */
+	NCR710_DMODE_MAN      = 1<<0, /* Manual Start Mode*/
+	NCR710_DMODE_U0       = 1<<1, /* User Programmable Transfer Type */
+	NCR710_DMODE_FAM      = 1<<2, /* Fixed Address Mode */
+	NCR710_DMODE_PD       = 1<<3, /* Program/Data */
+	NCR710_DMODE_FC0      = 1<<4, /* Function Code[0] */
+	NCR710_DMODE_FC1      = 1<<5, /* Function Code[1] */
+	NCR710_DMODE_BL0      = 1<<6, /* Burst Length[0] */
+	NCR710_DMODE_BL1      = 1<<7, /* Burst Length[1] */
 
 	/**
 	 * NCR710_DIEN Register Bits

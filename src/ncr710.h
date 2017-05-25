@@ -341,7 +341,7 @@ enum {
 	/**
 	 * NCR710_DMODE Register Bits
 	 */
-	NCR710_DMODE_MAN      = 1<<0, /* Manual Start Mode*/
+	NCR710_DMODE_MAN      = 1<<0, /* Manual Start Mode */
 	NCR710_DMODE_U0       = 1<<1, /* User Programmable Transfer Type */
 	NCR710_DMODE_FAM      = 1<<2, /* Fixed Address Mode */
 	NCR710_DMODE_PD       = 1<<3, /* Program/Data */
@@ -353,10 +353,26 @@ enum {
 	/**
 	 * NCR710_DIEN Register Bits
 	 */
+	NCR710_DIEN_IID       = 1<<0, /* Illegal Instruction Detected */
+	NCR710_DIEN_WTD       = 1<<1, /* Watchdog Timeout Detected */
+	NCR710_DIEN_SIR       = 1<<2, /* SCRIPTS Interrupt Instruction Receieved */
+	NCR710_DIEN_SSI       = 1<<3, /* SCSI Set Interrupt */
+	NCR710_DIEN_ABRT      = 1<<4, /* Abort Operation */
+	NCR710_DIEN_BF        = 1<<5, /* Bus Fault */
+	NCR710_DIEN_R0        = 1<<6, /* Reserved[0] */
+	NCR710_DIEN_R1        = 1<<7, /* Reserved[1] */
 
 	/**
 	 * NCR710_DCNTL Register Bits
 	 */
+	NCR710_DCNTL_COM      = 1<<0, /* SYM53C700 Compatibility */
+	NCR710_DCNTL_FA       = 1<<1, /* Fast Arbitration */
+	NCR710_DCNTL_STD      = 1<<2, /* Start DMA Operation */
+	NCR710_DCNTL_LLM      = 1<<3, /* Enable SCSI Low Level Mode */
+	NCR710_DCNTL_SSM      = 1<<4, /* Single Step Mode */
+	NCR710_DCNTL_EA       = 1<<5, /* Enable ACK */
+	NCR710_DCNTL_CF0      = 1<<6, /* Clock Frequency[0] */
+	NCR710_DCNTL_CF1      = 1<<7, /* Clock Frequency[1] */
 } NCR710_RegisterBits;
 
 /**

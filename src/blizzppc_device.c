@@ -108,15 +108,3 @@ void * BlizzPPC_Expunge(struct DeviceManagerInterface * Self) {
 
 /*********************************************************************************************************************/
 
-void * BlizzPPC_BeginIO(struct DeviceManagerInterface * Self, struct IORequest * ioRequest) {
-	pprintf(DBG_NOTICE, "Here\n");
-	return NULL;
-}
-
-/*********************************************************************************************************************/
-
-int32  BlizzPPC_AbortIO(struct DeviceManagerInterface * Self, struct IORequest * ioRequest) {
-	pprintf(DBG_NOTICE, "Here\n");
-	return 0;
-}
-

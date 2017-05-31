@@ -19,7 +19,7 @@ static uint32 genericRelease(struct Interface *);
 extern int32  BlizzPPC_Open(struct DeviceManagerInterface *, struct IORequest *, uint32 , uint32);
 extern void * BlizzPPC_Close(struct DeviceManagerInterface *, struct IORequest *);
 extern void * BlizzPPC_Expunge(struct DeviceManagerInterface *Self);
-extern void * BlizzPPC_BeginIO(struct DeviceManagerInterface *, struct IORequest *);
+extern void   BlizzPPC_BeginIO(struct DeviceManagerInterface *, struct IORequest *);
 extern int32  BlizzPPC_AbortIO(struct DeviceManagerInterface *, struct IORequest *);
 extern BlizzPPC_Device* BlizzPPC_Init(BlizzPPC_Device *, void *, struct ExecIFace *);
 

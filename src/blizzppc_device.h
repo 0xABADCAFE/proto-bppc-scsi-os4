@@ -44,6 +44,14 @@ enum {
 };
 
 /**
+ * To minimise ugly casting.
+ */
+typedef union {
+	struct Message  * message;
+	struct IOStdReq * ioRequest;
+} IOReqMessage;
+
+/**
  * Useful macros.
  */
 #define BPPC_DEVICE_NAME "blizzppc.device"
@@ -53,10 +61,5 @@ enum {
  * Shared globals.
  */
 extern struct ExecIFace * IExec;
-
-typedef union {
-	struct Message  * message;
-	struct IOStdReq * ioRequest;
-} IOReqMessage;
 
 #endif

@@ -18,6 +18,11 @@ extern void BlizzPPC_TaskEntry(BlizzPPC_Device *);
 
 /*********************************************************************************************************************/
 
+/**
+ * BlizzPPC_Init()
+ *
+ * Populates the uninitialised BlizzPPC_Device and creates the sub task for the device.
+ */
 BlizzPPC_Device * BlizzPPC_Init(BlizzPPC_Device * bppc_Device, void * seglist UNUSED, struct ExecIFace * iExec) {
 	struct ExecBase * SysBase          = NULL;
 
@@ -72,6 +77,11 @@ BlizzPPC_Device * BlizzPPC_Init(BlizzPPC_Device * bppc_Device, void * seglist UN
 
 /*********************************************************************************************************************/
 
+/**
+ * BlizzPPC_Open()
+ *
+ * Device vector.
+ */
 int32  BlizzPPC_Open(struct DeviceManagerInterface * Self, struct IOStdReq * ioRequest, uint32 unit, uint32 flags UNUSED) {
 	pprintf(DBG_NOTICE, BPPC_DEVICE_NAME ": Here\n");
 	if (
@@ -94,6 +104,11 @@ int32  BlizzPPC_Open(struct DeviceManagerInterface * Self, struct IOStdReq * ioR
 
 /*********************************************************************************************************************/
 
+/**
+ * BlizzPPC_Close()
+ *
+ * Device vector.
+ */
 void * BlizzPPC_Close(struct DeviceManagerInterface * Self, struct IOStdReq * ioRequest ) {
 	pprintf(DBG_NOTICE, "Here\n");
 	return NULL;
@@ -101,6 +116,11 @@ void * BlizzPPC_Close(struct DeviceManagerInterface * Self, struct IOStdReq * io
 
 /*********************************************************************************************************************/
 
+/**
+ * BlizzPPC_Expunge()
+ *
+ * Device vector.
+ */
 void * BlizzPPC_Expunge(struct DeviceManagerInterface * Self) {
 	pprintf(DBG_NOTICE, "Here\n");
 	return NULL;

@@ -9,19 +9,21 @@
 
 #include <exec/ports.h>
 #include <exec/tasks.h>
+#include <exec/io.h>
+#include <devices/scsidisk.h>
+#include <devices/newstyle.h>
+#include <devices/trackdisk.h>
 
 static int  BlizzPPC_GrabResources(BlizzPPC_Device *);
 static void BlizzPPC_FreeResources(BlizzPPC_Device *);
+static int  BlizzPPC_ProcessCommand(BlizzPPC_Device * bppc_Device UNUSED, struct IOStdReq * ioRequest);
 
 /*********************************************************************************************************************/
 
 void BlizzPPC_TaskMain(BlizzPPC_Device * bppc_Device) {
 	uint32 expectSignals, receivedSignals;
 
-	union {
-		struct Message  * message;
-		struct IOStdReq * ioRequest;
-	} command;
+	IOReqMessage command;
 
 	/* Define the signals we will wait on */
 	expectSignals =
@@ -40,6 +42,7 @@ void BlizzPPC_TaskMain(BlizzPPC_Device * bppc_Device) {
 
 		/* For now, just reply to everything with failure */
 		while ( (command.message = IExec->GetMsg(bppc_Device->bpd_CommandPort)) ) {
+			BlizzPPC_ProcessCommand(bppc_Device, command.ioRequest);
 			command.ioRequest->io_Error = IOERR_OPENFAIL;
 			IExec->ReplyMsg(command.message);
 			++intCommandCount;
@@ -47,6 +50,36 @@ void BlizzPPC_TaskMain(BlizzPPC_Device * bppc_Device) {
 		pprintf(DBG_INFO, "Ignored %d messages received by the CommandPort", intCommandCount);
 
 	} while (1);
+}
+
+/*********************************************************************************************************************/
+
+static int BlizzPPC_ProcessCommand(BlizzPPC_Device * bppc_Device UNUSED, struct IOStdReq * ioRequest) {
+	uint32 command = ioRequest->io_Command;
+	switch (command) {
+		case CMD_READ:
+		case CMD_WRITE:
+		case CMD_UPDATE:
+
+		/* devices/scsidisk.h */
+		case HD_SCSICMD:
+
+		/* devices/newstyle.h */
+		case NSCMD_TD_READ64:
+		case NSCMD_TD_WRITE64:
+		case NSCMD_TD_FORMAT64:
+
+		/* devices/trackdisk.h */
+		case TD_FORMAT:
+		case TD_GETGEOMETRY:
+		case TD_PROTSTATUS:
+		case TD_ADDCHANGEINT:
+		case TD_REMCHANGEINT:
+			break;
+		default:
+			break;
+	}
+	return 0;
 }
 
 /*********************************************************************************************************************/

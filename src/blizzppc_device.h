@@ -54,4 +54,9 @@ enum {
  */
 extern struct ExecIFace * IExec;
 
+typedef union {
+	struct Message  * message;
+	struct IOStdReq * ioRequest;
+} IOReqMessage;
+
 #endif

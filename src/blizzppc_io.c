@@ -14,8 +14,16 @@
 #include <devices/newstyle.h>
 #include <devices/trackdisk.h>
 
+void BlizzPPC_PinIORequest(struct IOStdReq * ioRequest);
+void BlizzPPC_UnpinIORequest(struct IOStdReq * ioRequest);
+
 /*********************************************************************************************************************/
 
+/**
+ * BlizzPPC_BeginIO()
+ *
+ * Library vector.
+ */
 void BlizzPPC_BeginIO(struct DeviceManagerInterface * Self, struct IORequest * ioRequest) {
 	pprintf(DBG_NOTICE, "Here\n");
 
@@ -81,10 +89,143 @@ void BlizzPPC_BeginIO(struct DeviceManagerInterface * Self, struct IORequest * i
 
 /*********************************************************************************************************************/
 
+/**
+ * BlizzPPC_AbortIO()
+ *
+ * Library vector.
+ */
 int32  BlizzPPC_AbortIO(struct DeviceManagerInterface * Self, struct IORequest * ioRequest) {
 	pprintf(DBG_NOTICE, "Here\n");
 	return 0;
 }
 
 /*********************************************************************************************************************/
+
+/**
+ * BlizzPPC_PinIORequest()
+ *
+ * Prevent the IORequest and associated data from being swapped out of physical memory.
+ */
+void BlizzPPC_PinIORequest(struct IOStdReq * ioRequest) {
+	pprintf(DBG_NOTICE, "Here\n");
+
+	/* Get the size of the message. It should at least be the size of the IOStdRequest */
+	size_t requestSize = ioRequest->io_Message.mn_Length ?
+		ioRequest->io_Message.mn_Length :
+		sizeof(struct IOStdReq);
+
+	/* Fistly lock the IOStdRequest area */
+	IExec->LockMem(ioRequest, requestSize);
+
+	pprintf(DBG_MISC, "Pinned IOStdRequest %u [%p]\n", requestSize, ioRequest);
+
+	/* If there is an io_Data entry in the request, we should lock that */
+	if (
+		ioRequest->io_Data && 
+		ioRequest->io_Length
+	) {
+		IExec->LockMem(ioRequest->io_Data, ioRequest->io_Length);
+		pprintf(DBG_MISC, "Pinned IOStdRequest->io_Data %u [%p]\n", ioRequest->io_Length, ioRequest->io_Data);
+	}
+
+	/* For a SCSI command, lock any associated command data and sense areas */
+	if (ioRequest->io_Command == HD_SCSICMD) {
+		struct SCSICmd * scsiCommand = (struct SCSICmd *)ioRequest->io_Data;
+		if (
+			scsiCommand->scsi_Command &&
+			scsiCommand->scsi_CmdLength
+		) {
+			IExec->LockMem(scsiCommand->scsi_Command, scsiCommand->scsi_CmdLength);
+			pprintf(
+				DBG_MISC, "Pinned IOStdRequest->io_Data->scsi_Command %u [%p]\n",
+				scsiCommand->scsi_CmdLength, scsiCommand->scsi_Command
+			);
+		}
+		if (
+			scsiCommand->scsi_Data &&
+			scsiCommand->scsi_Length
+		) {
+			IExec->LockMem(scsiCommand->scsi_Data, scsiCommand->scsi_Length);
+			pprintf(
+				DBG_MISC, "Pinned IOStdRequest->io_Data->scsi_Data %u [%p]\n",
+				scsiCommand->scsi_Length, scsiCommand->scsi_Data
+			);
+		}
+		if (
+			scsiCommand->scsi_Flags & SCSIF_AUTOSENSE &&
+			scsiCommand->scsi_SenseData &&
+			scsiCommand->scsi_SenseLength
+		) {
+			IExec->LockMem(scsiCommand->scsi_SenseData, scsiCommand->scsi_SenseLength);
+			pprintf(
+				DBG_MISC, "Pinned IOStdRequest->io_Data->scsi_SenseData %u [%p]\n",
+				scsiCommand->scsi_SenseLength, scsiCommand->scsi_SenseData
+			);
+		}
+	}
+}
+
+/*********************************************************************************************************************/
+
+/**
+ * BlizzPPC_UnpinIORequest()
+ *
+ * Removes the restriction that the IORequest and associated data must not be swapped out of physical memory.
+ */
+void BlizzPPC_UnpinIORequest(struct IOStdReq * ioRequest) {
+	pprintf(DBG_NOTICE, "Here\n");
+	/* Get the size of the message. It should at least be the size of the IOStdRequest */
+	size_t requestSize = ioRequest->io_Message.mn_Length ?
+		ioRequest->io_Message.mn_Length :
+		sizeof(struct IOStdReq);
+
+	/* For a SCSI command, unlock any associated command data and sense areas */
+	if (ioRequest->io_Command == HD_SCSICMD) {
+		struct SCSICmd * scsiCommand = (struct SCSICmd *)ioRequest->io_Data;
+		if (
+			scsiCommand->scsi_Flags & SCSIF_AUTOSENSE &&
+			scsiCommand->scsi_SenseData &&
+			scsiCommand->scsi_SenseLength
+		) {
+			IExec->UnlockMem(scsiCommand->scsi_SenseData, scsiCommand->scsi_SenseLength);
+			pprintf(
+				DBG_MISC, "Unpinned IOStdRequest->io_Data->scsi_SenseData %u [%p]\n",
+				scsiCommand->scsi_SenseLength, scsiCommand->scsi_SenseData
+			);
+		}
+		if (
+			scsiCommand->scsi_Data &&
+			scsiCommand->scsi_Length
+		) {
+			IExec->UnlockMem(scsiCommand->scsi_Data, scsiCommand->scsi_Length);
+			pprintf(
+				DBG_MISC, "Unpinned IOStdRequest->io_Data->scsi_Data %u [%p]\n",
+				scsiCommand->scsi_Length, scsiCommand->scsi_Data
+			);
+		}
+		if (
+			scsiCommand->scsi_Command &&
+			scsiCommand->scsi_CmdLength
+		) {
+			IExec->LockMem(scsiCommand->scsi_Command, scsiCommand->scsi_CmdLength);
+			pprintf(
+				DBG_MISC, "Unpinned IOStdRequest->io_Data->scsi_Command %u [%p]\n",
+				scsiCommand->scsi_CmdLength, scsiCommand->scsi_Command
+			);
+		}
+	}
+
+	/* If there is an io_Data entry in the request, we should unlock that */
+	if (
+		ioRequest->io_Data && 
+		ioRequest->io_Length
+	) {
+		IExec->UnlockMem(ioRequest->io_Data, ioRequest->io_Length);
+		pprintf(DBG_MISC, "Unpinned IOStdRequest->io_Data %u [%p]\n", ioRequest->io_Length, ioRequest->io_Data);
+	}
+
+	/* Finally unlock the IOStdRequest area */
+	IExec->LockMem(ioRequest, requestSize);
+	pprintf(DBG_MISC, "Unpinned IOStdRequest %u [%p]\n", requestSize, ioRequest);
+}
 

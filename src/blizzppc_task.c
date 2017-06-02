@@ -14,6 +14,9 @@
 #include <devices/newstyle.h>
 #include <devices/trackdisk.h>
 
+extern void BlizzPPC_PinIORequest(struct IOStdReq * ioRequest);
+extern void BlizzPPC_UnpinIORequest(struct IOStdReq * ioRequest);
+
 static int  BlizzPPC_GrabResources(BlizzPPC_Device *);
 static void BlizzPPC_FreeResources(BlizzPPC_Device *);
 static int  BlizzPPC_ProcessCommand(BlizzPPC_Device * bppc_Device UNUSED, struct IOStdReq * ioRequest);

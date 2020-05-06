@@ -1,7 +1,7 @@
 /**
  * blizzppc.device
  *
- * Experimental OS4 SCSI driver, prototype. 
+ * Experimental OS4 SCSI driver, prototype.
  */
 
 #include "blizzppc_device.h"
@@ -19,7 +19,7 @@ extern void BlizzPPC_UnpinIORequest(struct IOStdReq * ioRequest);
 
 static int  BlizzPPC_GrabResources(BlizzPPC_Device *);
 static void BlizzPPC_FreeResources(BlizzPPC_Device *);
-static int  BlizzPPC_ProcessCommand(BlizzPPC_Device * bppc_Device UNUSED, struct IOStdReq * ioRequest);
+static int  BlizzPPC_ProcessCommand(BlizzPPC_Device * bppc_Device, struct IOStdReq * ioRequest);
 
 /*********************************************************************************************************************/
 
@@ -57,7 +57,7 @@ void BlizzPPC_TaskMain(BlizzPPC_Device * bppc_Device) {
 
 /*********************************************************************************************************************/
 
-static int BlizzPPC_ProcessCommand(BlizzPPC_Device * bppc_Device UNUSED, struct IOStdReq * ioRequest) {
+static int BlizzPPC_ProcessCommand(BlizzPPC_Device * bppc_Device, struct IOStdReq * ioRequest) {
 	uint32 command = ioRequest->io_Command;
 	switch (command) {
 		case CMD_READ:
